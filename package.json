@@ -2,7 +2,7 @@
   "name": "fso2022-bloglist-backend",
   "version": "1.0.0",
   "description": "Blog list",
-  "main": "index.js",
+  "main": "index,js",
   "repository": "https://github.com/josenaldo/fso2022-bloglist-backend",
   "author": "Josenaldo de Oliveira Matos Filho",
   "license": "MIT",
@@ -21,8 +21,8 @@
     "morgan": "^1.10.0"
   },
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
+    "start": "node index,js",
+    "dev": "nodemon index,js",
     "clean": "npx rimraf build",
     "lint": "eslint ."
   }

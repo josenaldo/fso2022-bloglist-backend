@@ -1,8 +1,10 @@
-# Instructions
+# Project recipe
 
-## Create project dir
+## Initial configuration
 
-## Configure yarn
+### Create project dir
+
+### Configure yarn
 
 Execute this command and answer all questions:
 
@@ -10,19 +12,19 @@ Execute this command and answer all questions:
 yarn init
 ```
 
-## Add dev libs
+### Add dev libs
 
 ```sh
 yarn add --dev eslint eslint-config-prettier eslint-config-prettier nodemon
 ```
 
-## Add libs
+### Add libs
 
 ```sh
 yarn add mongoose morgan dotenv express cors
 ```
 
-## Add scripts
+### Add scripts
 
 In `package.json` file, add the initial scripts
 
@@ -35,13 +37,13 @@ In `package.json` file, add the initial scripts
 }
 ```
 
-## Generate readme
+### Generate readme
 
 ```sh
 npx readme-md-generator
 ```
 
-## Generate license
+### Generate license
 
 ```sh
 npm install -g mit-license-generator
@@ -49,13 +51,13 @@ npm install -g mit-license-generator
 license-mit create -a josenaldo -y 2022
 ```
 
-## Generate .gitignore
+### Generate .gitignore
 
 ```sh
 npx gitignore node
 ```
 
-## Generate .editorconfig
+### Generate .editorconfig
 
 Configure with 4 spaces for ident size and insert final newline as false
 
@@ -65,13 +67,13 @@ npx create-editorconfig
 
 For more information, see <https://github.com/DouglasdeMoura/create-editorconfig>
 
-## Configure ESlint
+### Configure ESlint
 
 ```sh
 npm init @eslint/config
 ```
 
-## Config prettier
+### Config prettier
 
 Create a file `.prettierrc` with this config:
 
@@ -83,8 +85,33 @@ Create a file `.prettierrc` with this config:
 }
 ```
 
-## Config Fly.io
+### Config Fly.io
 
 ```sh
 flyctl launch
 ```
+
+## Project structure
+
+- root
+  - controllers
+    - blogs.js
+  - model
+    - blog.js
+  - utils
+    - config.js
+    - logger.js
+    - middleware.js
+  - app.js
+  - index.js
+
+## Create database
+
+In Mongo Atlas, create a new project.
+In network access, grant acee to 0.0.0.0/0
+In database, create a cluster Free/Shared > AWS > São Paulo
+In Security Quickstart, criar usuário do banco:
+  User: fullstack
+  senha:
+In database, click in Connect >  Coonnect your application and copy the mongo URI
+In mongtoDb URI, replace the password and add the database name between the "mongodb.net/" and "?".
