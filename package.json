@@ -1,0 +1,29 @@
+{
+  "name": "fso2022-bloglist-backend",
+  "version": "1.0.0",
+  "description": "Blog list",
+  "main": "index.js",
+  "repository": "https://github.com/josenaldo/fso2022-bloglist-backend",
+  "author": "Josenaldo de Oliveira Matos Filho",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^7.32.0 || ^8.2.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.25.2",
+    "nodemon": "^2.0.20"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^6.7.4",
+    "morgan": "^1.10.0"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "clean": "npx rimraf build",
+    "lint": "eslint ."
+  }
+}
