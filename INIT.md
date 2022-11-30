@@ -82,3 +82,9 @@ Create a file `.prettierrc` with this config:
   "singleQuote": true
 }
 ```
+
+## Config Fly.io
+
+```sh
+flyctl launch
+```
