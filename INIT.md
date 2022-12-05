@@ -115,3 +115,47 @@ In Security Quickstart, criar usuário do banco:
   senha:
 In database, click in Connect >  Coonnect your application and copy the mongo URI
 In mongtoDb URI, replace the password and add the database name between the "mongodb.net/" and "?".
+
+## Deploy no Fly.io
+
+Configurar as variáveis de ambiente MONGODB_URI e PORT.
+
+A porta deve ser 8080.
+
+```sh
+yarn deploy
+```
+
+## Tests
+
+Instalar o jest
+
+```sh
+yarn add --dev jest
+```
+
+No `package.json`:
+
+a - adicionar o script `test`:
+
+```json
+"scripts": {
+  ...
+  "test": "jest --verbose"
+  ...
+}
+```
+
+b - No final do arquivo, adicionar a seguinte propriedade:
+
+```json
+"jest": {
+  "testEnvironment": "node"
+}
+```
+
+Na raiz do projeto, criar diretório `tests`.
+
+Nesse diretório, pra cada suite de testes, criar um arquivo com o padrão `nome.test.js`.
+
+No arquivo `eslintrc.js`, na chave `env`, adicione o valor `jest: true`
