@@ -70,8 +70,16 @@ const listOfSeveralTopBlogs = [
   {
     _id: '5a422a851b54a676234d17f7',
     title: 'React patterns',
-    author: 'Edsger W. Dijkstra',
+    author: 'Michael Chan',
     url: 'https://reactpatterns.com/',
+    likes: 7,
+    __v: 0,
+  },
+  {
+    _id: '5a422a851b54a676234d17f7',
+    title: 'About the sequentiality of process descriptions.',
+    author: 'Edsger W. Dijkstra',
+    url: 'https://www.cs.utexas.edu/users/EWD/translations/EWD35-English.html',
     likes: 7,
     __v: 0,
   },
@@ -80,7 +88,7 @@ const listOfSeveralTopBlogs = [
     title: 'Go To Statement Considered Harmful',
     author: 'Edsger W. Dijkstra',
     url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
-    likes: 12,
+    likes: 5,
     __v: 0,
   },
   {
@@ -160,7 +168,7 @@ describe('favorite blog', () => {
   }
 
   const favoriteOfSeveralTopBlogs = {
-    title: 'Go To Statement Considered Harmful',
+    title: 'Canonical string reduction',
     author: 'Edsger W. Dijkstra',
     likes: 12,
   }
@@ -230,5 +238,47 @@ describe('most blogs', () => {
   test('of a several most blogs list is equal to expectedMostBlogsForSeveralMostBlogs', () => {
     const result = listHelper.mostBlogs(listOfSeveralTopBlogs)
     expect(result).toEqual(expectedMostBlogsForSeveralMostBlogs)
+  })
+})
+
+describe('most likes', () => {
+  const mostLikesToOneBlog = {
+    author: 'Edsger W. Dijkstra',
+    likes: 5,
+  }
+
+  const mostLikesToSeveralBlogs = {
+    author: 'Edsger W. Dijkstra',
+    likes: 17,
+  }
+
+  const mostLikesToSeveralTopBlogs = {
+    author: 'Edsger W. Dijkstra',
+    likes: 24,
+  }
+
+  test('of undefined list is undefined', () => {
+    const result = listHelper.mostLikes(undefinedBlog)
+    expect(result).toBeUndefined()
+  })
+
+  test('of empty list is undefined', () => {
+    const result = listHelper.mostLikes(emptyListOfBlog)
+    expect(result).toBeUndefined()
+  })
+
+  test("of a list with one blog is equal to the author of this blog and the same number of this blog's likes", () => {
+    const result = listHelper.mostLikes(listWithOneBlog)
+    expect(result).toEqual(mostLikesToOneBlog)
+  })
+
+  test('of a list with several blogs is equal to the author with more likes and the total of likes this author has', () => {
+    const result = listHelper.mostLikes(listOfSeveralBlogs)
+    expect(result).toEqual(mostLikesToSeveralBlogs)
+  })
+
+  test('of a list with more than one top author is the first of these authors, being that the authors are sorted alphabetically', () => {
+    const result = listHelper.mostLikes(listOfSeveralTopBlogs)
+    expect(result).toEqual(mostLikesToSeveralTopBlogs)
   })
 })
