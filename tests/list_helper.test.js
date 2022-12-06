@@ -70,7 +70,7 @@ const listOfSeveralTopBlogs = [
   {
     _id: '5a422a851b54a676234d17f7',
     title: 'React patterns',
-    author: 'Michael Chan',
+    author: 'Edsger W. Dijkstra',
     url: 'https://reactpatterns.com/',
     likes: 7,
     __v: 0,
@@ -125,6 +125,16 @@ test('dummy returns one', () => {
 })
 
 describe('total likes', () => {
+  test('of undefined list is zero', () => {
+    const result = listHelper.totalLikes(undefinedBlog)
+    expect(result).toBe(0)
+  })
+
+  test('of empty lists is zero', () => {
+    const result = listHelper.totalLikes(emptyListOfBlog)
+    expect(result).toBe(0)
+  })
+
   test('of a list with one blog is equals the likes of that', () => {
     const result = listHelper.totalLikes(listWithOneBlog)
     expect(result).toBe(5)
@@ -133,16 +143,6 @@ describe('total likes', () => {
   test("of a bigger list are calculated by adding each blog's likes", () => {
     const result = listHelper.totalLikes(listOfSeveralBlogs)
     expect(result).toBe(36)
-  })
-
-  test('of empty lists is zero', () => {
-    const result = listHelper.totalLikes(emptyListOfBlog)
-    expect(result).toBe(0)
-  })
-
-  test('of undefined list is zero', () => {
-    const result = listHelper.totalLikes(undefinedBlog)
-    expect(result).toBe(0)
   })
 })
 
@@ -175,7 +175,7 @@ describe('favorite blog', () => {
     expect(result).toBeUndefined()
   })
 
-  test('of a list with one blog is egual to that', () => {
+  test('of a list with one blog is equal to that', () => {
     const result = listHelper.favoriteBlog(listWithOneBlog)
     expect(result).toEqual(favoriteOfOneBlog)
   })
@@ -188,5 +188,47 @@ describe('favorite blog', () => {
   test('of a list with two or more top favorites is the first blog of the top favorites', () => {
     const result = listHelper.favoriteBlog(listOfSeveralTopBlogs)
     expect(result).toEqual(favoriteOfSeveralTopBlogs)
+  })
+})
+
+describe('most blogs', () => {
+  const expectedMostBlogsForOneBlog = {
+    author: 'Edsger W. Dijkstra',
+    blogs: 1,
+  }
+
+  const expectedMostBlogsForSeveralBlogs = {
+    author: 'Robert C. Martin',
+    blogs: 3,
+  }
+
+  const expectedMostBlogsForSeveralMostBlogs = {
+    author: 'Edsger W. Dijkstra',
+    blogs: 3,
+  }
+
+  test('of undefined list is undefined', () => {
+    const result = listHelper.mostBlogs(undefinedBlog)
+    expect(result).toBeUndefined()
+  })
+
+  test('of empty list is undefined', () => {
+    const result = listHelper.mostBlogs(emptyListOfBlog)
+    expect(result).toBeUndefined()
+  })
+
+  test('of a list with one blog is equal to the author of this blog and one blog', () => {
+    const result = listHelper.mostBlogs(listWithOneBlog)
+    expect(result).toEqual(expectedMostBlogsForOneBlog)
+  })
+
+  test('of a several blogs list is equal to expectedMostBlogsForSeveralBlogs', () => {
+    const result = listHelper.mostBlogs(listOfSeveralBlogs)
+    expect(result).toEqual(expectedMostBlogsForSeveralBlogs)
+  })
+
+  test('of a several most blogs list is equal to expectedMostBlogsForSeveralMostBlogs', () => {
+    const result = listHelper.mostBlogs(listOfSeveralTopBlogs)
+    expect(result).toEqual(expectedMostBlogsForSeveralMostBlogs)
   })
 })
