@@ -18,6 +18,34 @@ yarn install
 yarn run start
 ```
 
+## References
+
+### Libs
+
+- Dev dependencies
+  - Eslint
+    - <https://eslint.org/>
+    - <https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb-base>
+    - <https://github.com/prettier/eslint-config-prettier>
+    - <https://github.com/import-js/eslint-plugin-import>
+  - Tests
+    - <https://jestjs.io/>
+    - <https://github.com/ladjs/supertest>
+  - Execution
+    - <https://nodemon.io/>
+- Dependencies
+  - <https://github.com/expressjs/cors>
+  - <https://github.com/motdotla/dotenv>
+  - <https://expressjs.com/>
+  - <https://lodash.com/>
+  - <https://mongoosejs.com/>
+  - <https://github.com/expressjs/morgan>
+
+### Deploy
+
+- Database - <https://cloud.mongodb.com/>
+- Backend - <https://fly.io/>
+
 ## Author
 
 👤 **Josenaldo de Oliveira Matos Filho**
