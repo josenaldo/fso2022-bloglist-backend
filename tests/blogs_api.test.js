@@ -32,6 +32,33 @@ test('blogs must have an id property', async () => {
   })
 })
 
+test('a valid blog post can be added', async () => {
+  const newBlog = {
+    title: 'Programação Orientada a Gambiearra',
+    author: 'Josenaldo Matos',
+    url: 'http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.htmll',
+    likes: 10,
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+
+  const blogsAtEnd = await helper.blogsInDb()
+  expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length + 1)
+
+  const contents = blogsAtEnd.map((b) => ({
+    title: b.title,
+    author: b.author,
+    url: b.url,
+    likes: b.likes,
+  }))
+
+  expect(contents).toContainEqual(newBlog)
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
