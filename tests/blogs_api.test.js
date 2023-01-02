@@ -2,8 +2,8 @@ const mongoose = require('mongoose')
 const supertest = require('supertest')
 const app = require('../app')
 const Blog = require('../models/blog')
-
 const helper = require('./blogs_test_helper')
+
 const api = supertest(app)
 
 beforeEach(async () => {
@@ -18,7 +18,7 @@ test('blogs are returned as json', async () => {
     .get('/api/blogs')
     .expect(200)
     .expect('Content-Type', /application\/json/)
-})
+}, 10000)
 
 test('blogs must have an id property', async () => {
   const response = await api.get('/api/blogs')
@@ -34,7 +34,7 @@ test('blogs must have an id property', async () => {
 
 test('a valid blog post can be added', async () => {
   const newBlog = {
-    title: 'Programação Orientada a Gambiearra',
+    title: 'Programação Orientada a Gambiarra',
     author: 'Josenaldo Matos',
     url: 'http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.htmll',
     likes: 10,
@@ -61,7 +61,7 @@ test('a valid blog post can be added', async () => {
 
 test('a inexistent like property must have value of zero', async () => {
   const newBlog = {
-    title: 'Programação Orientada a Gambiearra',
+    title: 'Programação Orientada a Gambiarra',
     author: 'Josenaldo Matos',
     url: 'http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.htmll',
   }
@@ -82,12 +82,29 @@ test('a inexistent like property must have value of zero', async () => {
   }))
 
   const filteredBlogs = blogs.filter(
-    (b) => b.title === 'Programação Orientada a Gambiearra'
+    (b) => b.title === 'Programação Orientada a Gambiarra'
   )
   expect(filteredBlogs).toHaveLength(1)
 
   const addedBlog = filteredBlogs[0]
   expect(addedBlog.likes).toBe(0)
+})
+
+test('trying add a invalid blog must return bad request', async () => {
+  const blogWithoutTitle = {
+    author: 'Josenaldo Matos',
+    url: 'http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.htmll',
+    likes: 10,
+  }
+
+  const blogWithoutUrl = {
+    title: 'Programação Orientada a Gambiarra',
+    author: 'Josenaldo Matos',
+    likes: 10,
+  }
+
+  await api.post('/api/blogs').send(blogWithoutTitle).expect(400)
+  await api.post('/api/blogs').send(blogWithoutUrl).expect(400)
 })
 
 afterAll(() => {
