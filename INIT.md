@@ -98,6 +98,9 @@ flyctl launch
     - blogs.js
   - model
     - blog.js
+  - tests
+    - blogs_api.tests.js
+    - blogs_test_helper.js
   - utils
     - config.js
     - logger.js
@@ -229,6 +232,10 @@ const MONGODB_URI =
 Refactor the controller, moving from promise-then to async-await.
 
 Install express-async-errors
+
+```sh
+yarn add express-async-errors
+```
 
 ### /.env
 
