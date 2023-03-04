@@ -12,14 +12,14 @@ beforeEach(async () => {
 }, 10000)
 
 describe('when viewing blogs', () => {
-  test('blogs are returned as json', async () => {
+  test('should return blogs as JSON', async () => {
     await api
       .get('/api/blogs')
       .expect(200)
       .expect('Content-Type', /application\/json/)
-  }, 10000)
+  })
 
-  test('blogs must have an id property', async () => {
+  test('should require an id property for each blog', async () => {
     const response = await api.get('/api/blogs')
 
     const blogs = response.body
@@ -33,7 +33,7 @@ describe('when viewing blogs', () => {
 })
 
 describe('when viewing a specific blog', () => {
-  test('succeeds with a valid id', async () => {
+  test('should succeed with a valid id', async () => {
     const blogsAtStart = await helper.blogsInDb()
 
     const blogToView = blogsAtStart[0]
@@ -48,13 +48,13 @@ describe('when viewing a specific blog', () => {
     expect(resultBlog.body).toEqual(proccessedBlogToView)
   })
 
-  test('fails with statuscode 404 if blog does not exist', async () => {
+  test('should fail with status 404 if blog does not exist', async () => {
     const validNonExistingId = await helper.nonExistingId()
 
     await api.get(`api/blogs/${validNonExistingId}`).expect(404)
   })
 
-  test('fails with statuscode 400 if id is invalid', async () => {
+  test('should fail with status 400 if id is invalid', async () => {
     const invalidId = '5a3d5da59070081a82a3445'
 
     await api.get(`/api/blogs/${invalidId}`).expect(400)
@@ -62,7 +62,7 @@ describe('when viewing a specific blog', () => {
 })
 
 describe('when adding a blog', () => {
-  test('a valid blog post can be added', async () => {
+  test('should add a valid blog post successfully', async () => {
     const newBlog = {
       title: 'Programação Orientada a Gambiarra',
       author: 'Josenaldo Matos',
@@ -89,7 +89,7 @@ describe('when adding a blog', () => {
     expect(blogs).toContainEqual(newBlog)
   })
 
-  test('a inexistent like property must have value of zero', async () => {
+  test('should set the value of a non-existent like property to zero', async () => {
     const newBlog = {
       title: 'Programação Orientada a Gambiarra',
       author: 'Josenaldo Matos',
@@ -120,7 +120,7 @@ describe('when adding a blog', () => {
     expect(addedBlog.likes).toBe(0)
   })
 
-  test('trying add a invalid blog must return bad request', async () => {
+  test('should return a bad request status when trying to add an invalid blog', async () => {
     const blogWithoutTitle = {
       author: 'Josenaldo Matos',
       url: 'https://livropog.com.br',
@@ -139,7 +139,7 @@ describe('when adding a blog', () => {
 })
 
 describe('when removing a blog', () => {
-  test('existent blog must succeed with status 204 ', async () => {
+  test('should succeed with status 204 for an existing blog', async () => {
     const blogsAtStart = await helper.blogsInDb()
     const blogToDelete = blogsAtStart[0]
 
@@ -154,20 +154,102 @@ describe('when removing a blog', () => {
     expect(titles).not.toContain(blogToDelete.title)
   })
 
-  test('invalid id must fails with status 400', async () => {
+  test('should fail with status 400 for an invalid id', async () => {
     const invalidId = '5a3d5da59070081a82a3445'
 
     await api.delete(`/api/blogs/${invalidId}`).expect(400)
   })
 
-  test('non existent blog must succeed with status 204', async () => {
+  test('should succeed with status 204 for a non-existent blog', async () => {
     const nonExistentId = await helper.nonExistingId()
 
     await api.delete(`/api/blogs/${nonExistentId}`).expect(204)
   })
 })
 
-describe('when editing a blog', () => {})
+describe('when editing a blog', () => {
+  test('should update an existing blog successfully', async () => {
+    const blogToUpdate = await helper.existingBlog()
+
+    const updatedId = blogToUpdate.id
+
+    blogToUpdate.title = 'Updated title'
+
+    await api.put(`/api/blogs/${updatedId}`).send(blogToUpdate).expect(200)
+
+    const updatedBlog = await Blog.findById(updatedId)
+
+    expect(updatedBlog).toMatchObject(blogToUpdate)
+  })
+
+  test('should update an existing blog successfully without an author', async () => {
+    const blogToUpdate = await helper.existingBlog()
+
+    const updatedId = blogToUpdate.id
+
+    blogToUpdate.title = 'Updated title'
+    delete blogToUpdate.author
+
+    await api.put(`/api/blogs/${updatedId}`).send(blogToUpdate).expect(200)
+
+    const updatedBlog = await Blog.findById(updatedId)
+
+    expect(updatedBlog).toMatchObject(blogToUpdate)
+  })
+
+  test('should update an existing blog successfully without likes', async () => {
+    const blogToUpdate = await helper.existingBlog()
+
+    const updatedId = blogToUpdate.id
+
+    blogToUpdate.title = 'Updated title'
+    delete blogToUpdate.likes
+
+    await api.put(`/api/blogs/${updatedId}`).send(blogToUpdate).expect(200)
+
+    const updatedBlog = await Blog.findById(updatedId)
+
+    expect(updatedBlog.likes).toBe(0)
+  })
+
+  test('should return a 404 error when trying to update a non-existent blog', async () => {
+    const nonExistingId = await helper.nonExistingId()
+
+    const blogToUpdate = await helper.existingBlog()
+
+    blogToUpdate.id = nonExistingId
+    blogToUpdate.title = 'Updated title'
+
+    await api.put(`/api/blogs/${nonExistingId}`).send(blogToUpdate).expect(404)
+  })
+
+  test('should fail with status 400 for an invalid id', async () => {
+    const invalidId = 'l33tC0d3'
+    const blogToUpdate = await helper.existingBlog()
+
+    await api.put(`/api/blogs/${invalidId}`).send(blogToUpdate).expect(400)
+  })
+
+  test('should fail with astatus 400 when trying to update a blog without a title', async () => {
+    const blogToUpdate = await helper.existingBlog()
+
+    delete blogToUpdate.title
+    await api
+      .put(`/api/blogs/${blogToUpdate.id}`)
+      .send(blogToUpdate)
+      .expect(400)
+  })
+
+  test('should fail with astatus 400 when trying to update a blog without a url', async () => {
+    const blogToUpdate = await helper.existingBlog()
+
+    delete blogToUpdate.url
+    await api
+      .put(`/api/blogs/${blogToUpdate.id}`)
+      .send(blogToUpdate)
+      .expect(400)
+  })
+})
 
 afterAll(() => {
   mongoose.connection.close()
