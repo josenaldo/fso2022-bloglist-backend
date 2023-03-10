@@ -33,15 +33,126 @@ describe('when creating a user', () => {
     expect(usernames).toContain(newUser.username)
   })
 
-  test.todo('a user with an empty username cannot be created')
+  test('a user with an empty username cannot be created', async () => {
+    const usersAtStart = await helper.usersInDb()
 
-  test.todo('a user with an invalid username cannot be created')
+    const newUser = {
+      name: 'New User',
+      username: '',
+      password: 'password',
+    }
 
-  test.todo('a user with an invalid password cannot be created')
+    const respose = await api
+      .post('/api/users')
+      .send(newUser)
+      .expect(400)
+      .expect('Content-Type', /application\/json/)
 
-  test.todo('a user with an invalid username and password cannot be created')
+    const usersAtEnd = await helper.usersInDb()
+    expect(usersAtEnd).toHaveLength(usersAtStart.length)
 
-  test.todo('a user with a duplicate username cannot be created')
+    const usernames = usersAtEnd.map((u) => u.username)
+    expect(usernames).not.toContain(newUser.username)
+
+    expect(respose.body.error).toContain('`username` is required')
+  })
+
+  test('a user with an invalid username cannot be created', async () => {
+    const usersAtStart = await helper.usersInDb()
+
+    const newUser = {
+      name: 'New User',
+      username: 'ne',
+      password: 'password',
+    }
+
+    const respose = await api
+      .post('/api/users')
+      .send(newUser)
+      .expect(400)
+      .expect('Content-Type', /application\/json/)
+
+    const usersAtEnd = await helper.usersInDb()
+    expect(usersAtEnd).toHaveLength(usersAtStart.length)
+
+    const usernames = usersAtEnd.map((u) => u.username)
+    expect(usernames).not.toContain(newUser.username)
+
+    expect(respose.body.error).toContain(
+      '`username` must be at least 3 characters'
+    )
+  })
+
+  test('a user with an empty password cannot be created', async () => {
+    const usersAtStart = await helper.usersInDb()
+
+    const newUser = {
+      name: 'New User',
+      username: 'newuser',
+      password: '',
+    }
+
+    const respose = await api
+      .post('/api/users')
+      .send(newUser)
+      .expect(400)
+      .expect('Content-Type', /application\/json/)
+
+    const usersAtEnd = await helper.usersInDb()
+    expect(usersAtEnd).toHaveLength(usersAtStart.length)
+
+    const usernames = usersAtEnd.map((u) => u.username)
+    expect(usernames).not.toContain(newUser.username)
+
+    expect(respose.body.error).toContain('`password` is required')
+  })
+
+  test('a user with an invalid password cannot be created', async () => {
+    const usersAtStart = await helper.usersInDb()
+
+    const newUser = {
+      name: 'New User',
+      username: 'newuser',
+      password: '12',
+    }
+
+    const respose = await api
+      .post('/api/users')
+      .send(newUser)
+      .expect(400)
+      .expect('Content-Type', /application\/json/)
+
+    const usersAtEnd = await helper.usersInDb()
+    expect(usersAtEnd).toHaveLength(usersAtStart.length)
+
+    const usernames = usersAtEnd.map((u) => u.username)
+    expect(usernames).not.toContain(newUser.username)
+
+    expect(respose.body.error).toContain(
+      '`password` must be at least 3 characters'
+    )
+  })
+
+  test('a user with a duplicate username cannot be created', async () => {
+    const usersAtStart = await helper.usersInDb()
+
+    const newUser = {
+      name: 'root',
+      username: 'root',
+      password: 'root',
+    }
+
+    const respose = await api
+      .post('/api/users')
+      .send(newUser)
+      .expect(400)
+      .expect('Content-Type', /application\/json/)
+
+    const usersAtEnd = await helper.usersInDb()
+    expect(usersAtEnd).toHaveLength(usersAtStart.length)
+
+    expect(respose.body.error).toContain('`username` must to be unique')
+  })
 })
 
 describe('when viewing all users', () => {

@@ -1,11 +1,21 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-param-reassign */
 const mongoose = require('mongoose')
+const uniqueValidator = require('mongoose-unique-validator')
 
 const userSchema = new mongoose.Schema({
   name: String,
-  username: String,
+  username: {
+    type: String,
+    unique: true,
+    required: [true, '`username` is required'],
+    minlength: [3, '`username` must be at least 3 characters'],
+  },
   passwordHash: String,
+})
+
+userSchema.plugin(uniqueValidator, {
+  message: '`{PATH}` must to be unique',
 })
 
 userSchema.set('toJSON', {
