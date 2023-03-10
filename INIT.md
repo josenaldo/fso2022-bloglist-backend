@@ -244,3 +244,47 @@ Add to the `.env` file a variable for the test database.
 ```env
 MONGODB_URI=mongodb+srv://<user>:<password>@<cluster>.mongodb.net/<database>-test?retryWrites=true&w=majority
 ```
+
+## User administration
+
+To create the user administration, we will use the `bcrypt` library to encrypt the password and the `mongoose-unique-validator` to validate the uniqueness of the username.
+
+Install bcrypr and mongoose-unique-validator
+
+```sh
+yarn add bcrypt
+yarn add mongoose-unique-validator
+```
+
+Create the test `users_api.test.js` in the `tests` folder.
+
+Create the test helper `users_test_helper.js` in the `tests` folder.
+
+Create the test for the operation POST `/api/users` in the `users_api.test.js` file.
+
+Create the model `user.js` in the `models` folder.
+
+Create the route `/api/users` and the controller `users.js` in the `controllers` folder.
+
+Create the operation POST `/api/users` in the `users.js` controller.
+
+## Login
+
+Install jsonwebtoken
+
+```sh
+yarn add jsonwebtoken
+```
+
+Create the test `login_api.test.js` in the `tests` folder.
+
+Create the test helper `login_test_helper.js` in the `tests` folder.
+
+Create the test for the operation POST `/api/login` in the `login_api.test.js` file.
+
+Create the route `/api/login` and the controller `login.js` in the `controllers` folder.
+
+Create the operation POST `/api/login` in the `login.js` controller.
+
+
+
