@@ -1,17 +1,50 @@
 const supertest = require('supertest')
 const mongoose = require('mongoose')
 
-const helper = require('./users_test_helper')
+const helper = require('./test_helper')
 const app = require('../app')
 
 const api = supertest(app)
 
-describe('when creating a user', () => {
-  beforeEach(async () => {
-    await helper.resetUsers()
+beforeEach(async () => {
+  await helper.resetDB()
+})
+
+describe('GET /users', () => {
+  test('should return all users as JSON', async () => {
+    await api
+      .get('/api/users')
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
   })
 
-  test('a valid user can be created', async () => {
+  test('should return all users', async () => {
+    const response = await api.get('/api/users')
+    expect(response.body).toHaveLength(helper.initialUsers.length)
+  })
+
+  test('should return users with the correct fields', async () => {
+    const response = await api.get('/api/users')
+
+    const users = response.body
+
+    expect(users).toBeDefined()
+
+    users.forEach((user) => {
+      expect(user.id).toBeDefined()
+      expect(user.name).toBeDefined()
+      expect(user.username).toBeDefined()
+      expect(user.passwordHash).not.toBeDefined()
+      expect(user.blogs).toBeDefined()
+      expect(user.blogs[0].title).toBeDefined()
+      expect(user.blogs[0].url).toBeDefined()
+      expect(user.blogs[0].author).toBeDefined()
+    })
+  })
+})
+
+describe('POST /users', () => {
+  it('should create a valid user', async () => {
     const usersAtStart = await helper.usersInDb()
 
     const newUser = {
@@ -33,7 +66,7 @@ describe('when creating a user', () => {
     expect(usernames).toContain(newUser.username)
   })
 
-  test('a user with an empty username cannot be created', async () => {
+  it('should not create a user with an empty username', async () => {
     const usersAtStart = await helper.usersInDb()
 
     const newUser = {
@@ -57,7 +90,7 @@ describe('when creating a user', () => {
     expect(respose.body.error).toContain('`username` is required')
   })
 
-  test('a user with an invalid username cannot be created', async () => {
+  it('should not create a user with an invalid username', async () => {
     const usersAtStart = await helper.usersInDb()
 
     const newUser = {
@@ -83,7 +116,7 @@ describe('when creating a user', () => {
     )
   })
 
-  test('a user with an empty password cannot be created', async () => {
+  it('should not create a user with an empty password', async () => {
     const usersAtStart = await helper.usersInDb()
 
     const newUser = {
@@ -107,7 +140,7 @@ describe('when creating a user', () => {
     expect(respose.body.error).toContain('`password` is required')
   })
 
-  test('a user with an invalid password cannot be created', async () => {
+  it('should not create a user with an invalid password', async () => {
     const usersAtStart = await helper.usersInDb()
 
     const newUser = {
@@ -133,7 +166,7 @@ describe('when creating a user', () => {
     )
   })
 
-  test('a user with a duplicate username cannot be created', async () => {
+  it('should not create a user with a duplicate username', async () => {
     const usersAtStart = await helper.usersInDb()
 
     const newUser = {
@@ -152,33 +185,6 @@ describe('when creating a user', () => {
     expect(usersAtEnd).toHaveLength(usersAtStart.length)
 
     expect(respose.body.error).toContain('`username` must to be unique')
-  })
-})
-
-describe('when viewing all users', () => {
-  beforeEach(async () => {
-    await helper.resetUsers()
-  })
-
-  test('all users are returned', async () => {
-    const response = await api.get('/api/users')
-
-    expect(response.body).toHaveLength(helper.initialUsers.length)
-  })
-
-  test('the returned users have the correct fields', async () => {
-    const response = await api.get('/api/users')
-
-    const users = response.body
-
-    expect(users).toBeDefined()
-
-    users.forEach((user) => {
-      expect(user.id).toBeDefined()
-      expect(user.name).toBeDefined()
-      expect(user.username).toBeDefined()
-      expect(user.passwordHash).not.toBeDefined()
-    })
   })
 })
 

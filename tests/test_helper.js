@@ -1,4 +1,7 @@
+const bcrypt = require('bcrypt')
+/* eslint-disable no-underscore-dangle */
 const Blog = require('../models/blog')
+const User = require('../models/user')
 
 const initialBlogs = [
   {
@@ -39,19 +42,65 @@ const initialBlogs = [
   },
 ]
 
+const initialUsers = [
+  {
+    name: 'Root',
+    username: 'root',
+    password: 'sekret',
+  },
+]
+
+const resetDB = async () => {
+  await Blog.deleteMany({})
+  await User.deleteMany({})
+
+  const user = initialUsers[0]
+
+  const passwordHash = await bcrypt.hash(user.password, 10)
+
+  const newUser = new User({
+    name: user.name,
+    username: user.username,
+    passwordHash,
+  })
+
+  await newUser.save()
+
+  const blogs = initialBlogs.map(
+    (blog) => new Blog({ ...blog, user: newUser._id })
+  )
+
+  const insertedBlogs = await Blog.insertMany(blogs)
+
+  const blogsIds = insertedBlogs.map((blog) => blog._id.toString())
+  newUser.blogs = blogsIds
+  await newUser.save()
+}
+
 const blogsInDb = async () => {
-  const blogs = await Blog.find({})
+  const blogs = await Blog.find({}).populate('user')
 
   return blogs.map((blog) => blog.toJSON())
 }
 
+const usersInDb = async () => {
+  const users = await User.find({})
+  return users.map((u) => u.toJSON())
+}
+
 const existingBlog = async () => {
-  const blogs = await Blog.find({})
+  const blogs = await Blog.find({}).populate('user')
 
   return blogs[0].toJSON()
 }
 
-const nonExistingId = async () => {
+const existingUser = async () => {
+  const users = await User.find({}).populate('blogs')
+
+  return users[0].toJSON()
+}
+
+const nonExistingBlogId = async () => {
   const blog = new Blog({
     title: 'Inexistent Id',
     author: 'Jesus Josephson',
@@ -68,7 +117,11 @@ const nonExistingId = async () => {
 
 module.exports = {
   initialBlogs,
+  initialUsers,
+  resetDB,
   blogsInDb,
+  usersInDb,
   existingBlog,
-  nonExistingId,
+  existingUser,
+  nonExistingBlogId,
 }
