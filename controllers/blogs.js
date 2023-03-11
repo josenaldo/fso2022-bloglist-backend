@@ -1,8 +1,23 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-underscore-dangle */
-const blogsRouter = require('express').Router()
+const jwt = require('jsonwebtoken')
 
+const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
 const User = require('../models/user')
+
+/**
+ * Extrai o token de autenticação de um objeto de requisição HTTP.
+ * @param {Object} request - Objeto representando a requisição HTTP.
+ * @returns {string|null} - O token de autenticação, ou null caso ele não esteja presente.
+ */
+const getTokenFrom = (request) => {
+  const authorization = request.get('authorization')
+  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+    return authorization.substring(7)
+  }
+  return null
+}
 
 blogsRouter.get('/', async (request, response) => {
   const blogs = await Blog.find({}).populate('user')
@@ -12,22 +27,22 @@ blogsRouter.get('/', async (request, response) => {
 blogsRouter.post('/', async (request, response) => {
   const { title, url, author, likes } = request.body
 
-  if (title === undefined || url === undefined) {
-    return response.status(400).end()
+  const token = getTokenFrom(request)
+  const decodedToken = jwt.verify(token, process.env.SECRET)
+
+  if (!token || !decodedToken.id) {
+    return response.status(401).json({ error: 'token missing or invalid' })
   }
 
-  const users = await User.find({})
-  const user = users[0]
+  const user = await User.findById(decodedToken.id)
 
-  const blogData = {
+  const blog = new Blog({
     title,
     url,
     author,
     likes: likes || 0,
     user: user._id,
-  }
-
-  const blog = new Blog(blogData)
+  })
 
   const savedBlog = await blog.save()
   user.blogs = user.blogs.concat(savedBlog._id)

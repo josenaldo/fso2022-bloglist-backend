@@ -114,23 +114,66 @@ describe('POST /blogs', () => {
   })
 
   it('should not create a blog with an empty title and fail with status 400', async () => {
-    const blogWithoutTitle = {
+    const invalidBlog = {
       author: 'Josenaldo Matos',
       url: 'https://livropog.com.br',
       likes: 10,
     }
 
-    await api.post('/api/blogs').send(blogWithoutTitle).expect(400)
+    await api.post('/api/blogs').send(invalidBlog).expect(400)
+  })
+
+  it('should not create a blog with an invalid title and fail with status 400', async () => {
+    const invalidBlog = {
+      title: 'abcd',
+      author: 'Josenaldo Matos',
+      url: 'https://livropog.com.br',
+      likes: 10,
+    }
+
+    await api.post('/api/blogs').send(invalidBlog).expect(400)
   })
 
   it('should not create a blog an empty url and fail with status 400 ', async () => {
-    const blogWithoutUrl = {
+    const invalidBlog = {
       title: 'Programação Orientada a Gambiarra',
       author: 'Josenaldo Matos',
       likes: 10,
     }
 
-    await api.post('/api/blogs').send(blogWithoutUrl).expect(400)
+    await api.post('/api/blogs').send(invalidBlog).expect(400)
+  })
+
+  it('should not create a blog an invalid url and fail with status 400 ', async () => {
+    const invalidBlog = {
+      title: 'Programação Orientada a Gambiarra',
+      author: 'Josenaldo Matos',
+      url: 'abcd',
+      likes: 10,
+    }
+
+    await api.post('/api/blogs').send(invalidBlog).expect(400)
+  })
+
+  it('should not create a blog an empty author and fail with status 400 ', async () => {
+    const invalidBlog = {
+      title: 'Programação Orientada a Gambiarra',
+      url: 'https://livropog.com.br',
+      likes: 10,
+    }
+
+    await api.post('/api/blogs').send(invalidBlog).expect(400)
+  })
+
+  it('should not create a blog an invalid author and fail with status 400 ', async () => {
+    const invalidBlog = {
+      title: 'Programação Orientada a Gambiarra',
+      author: 'abcd',
+      url: 'https://livropog.com.br',
+      likes: 10,
+    }
+
+    await api.post('/api/blogs').send(invalidBlog).expect(400)
   })
 })
 
