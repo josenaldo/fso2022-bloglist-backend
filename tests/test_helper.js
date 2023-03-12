@@ -1,7 +1,11 @@
-const bcrypt = require('bcrypt')
 /* eslint-disable no-underscore-dangle */
+const supertest = require('supertest')
+const bcrypt = require('bcrypt')
 const Blog = require('../models/blog')
 const User = require('../models/user')
+const app = require('../app')
+
+const api = supertest(app)
 
 const initialBlogs = [
   {
@@ -115,6 +119,15 @@ const nonExistingBlogId = async () => {
   return blog._id.toString()
 }
 
+const login = async (username, password) => {
+  const response = await api
+    .post('/api/login')
+    .send({ username, password })
+    .expect(200)
+
+  return response.body.token
+}
+
 module.exports = {
   initialBlogs,
   initialUsers,
@@ -124,4 +137,5 @@ module.exports = {
   existingBlog,
   existingUser,
   nonExistingBlogId,
+  login,
 }

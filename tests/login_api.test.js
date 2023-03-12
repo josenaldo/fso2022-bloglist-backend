@@ -5,11 +5,11 @@ const app = require('../app')
 
 const api = supertest(app)
 
-beforeEach(async () => {
-  await helper.resetDB()
-})
-
 describe('POST /api/login', () => {
+  beforeEach(async () => {
+    await helper.resetDB()
+  })
+
   it('should return a token and user information if the username and password are correct', async () => {
     const authData = { username: 'root', password: 'sekret' }
 

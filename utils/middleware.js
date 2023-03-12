@@ -61,7 +61,7 @@ const userExtractor = (request, response, next) => {
 
 const requireAuth = (request, response, next) => {
   if (!request.user) {
-    return response.status(401).json({ error: 'unauthorized access' })
+    response.status(401).json({ error: 'unauthorized access' })
   }
   next()
 }
