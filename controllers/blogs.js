@@ -1,7 +1,5 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-underscore-dangle */
-const jwt = require('jsonwebtoken')
-
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
 const User = require('../models/user')
