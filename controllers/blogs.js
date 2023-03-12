@@ -5,22 +5,19 @@ const jwt = require('jsonwebtoken')
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
 const User = require('../models/user')
+const middleware = require('../utils/middleware')
 
 blogsRouter.get('/', async (request, response) => {
   const blogs = await Blog.find({}).populate('user')
   response.json(blogs)
 })
 
-blogsRouter.post('/', async (request, response) => {
+blogsRouter.post('/', middleware.requireAuth, async (request, response) => {
   const { title, url, author, likes } = request.body
 
-  const decodedToken = jwt.verify(request.token, process.env.SECRET)
+  const authUser = request.user
 
-  if (!decodedToken.id) {
-    return response.status(401).json({ error: 'token invalid' })
-  }
-
-  const user = await User.findById(decodedToken.id)
+  const user = await User.findById(authUser.id)
 
   const blog = new Blog({
     title,
@@ -49,35 +46,37 @@ blogsRouter.get('/:id', async (request, response) => {
   }
 })
 
-blogsRouter.delete('/:id', async (request, response) => {
-  const decodedToken = jwt.verify(request.token, process.env.SECRET)
+blogsRouter.delete(
+  '/:id',
+  middleware.requireAuth,
+  async (request, response) => {
+    const blogToDelete = await Blog.findById(request.params.id)
 
-  if (!decodedToken.id) {
-    return response.status(401).json({ error: 'token invalid' })
+    if (!blogToDelete) {
+      return response.status(204).end()
+    }
+
+    if (blogToDelete.user.toString() !== request.user.id.toString()) {
+      return response.status(401).json({ error: 'unauthorized access' })
+    }
+
+    await Blog.findByIdAndRemove(request.params.id)
+    response.status(204).end()
   }
+)
 
-  const blogToDelete = await Blog.findById(request.params.id)
-
-  if (blogToDelete.user.toString() !== decodedToken.id.toString()) {
-    return response.status(401).json({ error: 'token invalid' })
-  }
-
-  await Blog.findByIdAndRemove(request.params.id)
-  response.status(204).end()
-})
-
-blogsRouter.put('/:id', async (request, response) => {
-  const { title, url, author, likes } = request.body
-
-  if (!title || !url) {
-    return response.status(400).json({ error: 'Title and URL are required' })
-  }
-
+blogsRouter.put('/:id', middleware.requireAuth, async (request, response) => {
   const blogToUpdate = await Blog.findById(request.params.id)
 
   if (!blogToUpdate) {
-    return response.status(404).json({ error: 'Blog not found' })
+    return response.status(404).json({ error: 'blog not found' })
   }
+
+  if (blogToUpdate.user.toString() !== request.user.id.toString()) {
+    return response.status(401).json({ error: 'unauthorized access' })
+  }
+
+  const { title, url, author, likes } = request.body
 
   blogToUpdate.title = title
   blogToUpdate.url = url
@@ -85,6 +84,7 @@ blogsRouter.put('/:id', async (request, response) => {
   blogToUpdate.likes = likes || 0
 
   const updatedBlog = await blogToUpdate.save()
+  await updatedBlog.populate('user')
   response.json(updatedBlog)
 })
 

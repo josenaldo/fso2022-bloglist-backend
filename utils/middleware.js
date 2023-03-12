@@ -1,5 +1,8 @@
+const jwt = require('jsonwebtoken')
 const morgan = require('morgan')
 const logger = require('./logger')
+
+const User = require('../models/user')
 
 morgan.token('body', (request) => JSON.stringify(request.body))
 
@@ -45,9 +48,29 @@ const tokenExtractor = (request, response, next) => {
   next()
 }
 
+const userExtractor = (request, response, next) => {
+  if (request.token) {
+    const decodedToken = jwt.verify(request.token, process.env.SECRET)
+    request.user = decodedToken
+  } else {
+    request.user = null
+  }
+
+  next()
+}
+
+const requireAuth = (request, response, next) => {
+  if (!request.user) {
+    return response.status(401).json({ error: 'unauthorized access' })
+  }
+  next()
+}
+
 module.exports = {
   requestLogger,
   unknownEndpoint,
   errorHandler,
   tokenExtractor,
+  userExtractor,
+  requireAuth,
 }
