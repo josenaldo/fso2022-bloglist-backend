@@ -35,7 +35,8 @@
     "clean": "npx rimraf build",
     "lint": "eslint .",
     "deploy": "flyctl deploy",
-    "open": "flyctl open"
+    "open": "flyctl open",
+    "logs:prod": "flyctl logs"
   },
   "jest": {
     "testEnvironment": "node"

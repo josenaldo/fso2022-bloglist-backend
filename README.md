@@ -6,17 +6,41 @@
 
 ## ✨ [Demo](https://fly)
 
+## Commands
+
+```sh
 ## Install
-
-```sh
 yarn install
-```
 
-## Usage
+## Run
+yarn start
 
-```sh
-yarn run start
+## Run development mode
+yarn dev
+
+## Test
+yarn test
+
+## Clean
+yarn clean
+
+## Lint
+yarn lint
+
+## Deploy on fly.io
+yarn deploy
+
+## Open fly.io
+yarn open
+
+## Logs
+yarn logs:prod
+
 ```
+part5-ex-5.1
+
+Part5, ex 5.1
+
 
 ## References
 
