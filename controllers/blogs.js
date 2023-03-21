@@ -83,7 +83,27 @@ blogsRouter.put('/:id', middleware.requireAuth, async (request, response) => {
 
   const updatedBlog = await blogToUpdate.save()
   await updatedBlog.populate('user')
+
   response.json(updatedBlog)
 })
+
+blogsRouter.post(
+  '/:id/likes',
+  middleware.requireAuth,
+  async (request, response) => {
+    const blogToUpdate = await Blog.findById(request.params.id)
+
+    if (!blogToUpdate) {
+      return response.status(404).json({ error: 'blog not found' })
+    }
+
+    blogToUpdate.likes += 1
+
+    const updatedBlog = await blogToUpdate.save()
+    await updatedBlog.populate('user')
+
+    response.json(updatedBlog)
+  }
+)
 
 module.exports = blogsRouter

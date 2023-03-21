@@ -7,3 +7,14 @@ content-type: application/json
     "password": "minhasenha"
 }
 
+###
+
+# Create another new user
+POST http://localhost:3003/api/users
+content-type: application/json
+
+{
+    "name": "Cassiana Gabriela Lima Barreto",
+    "username": "cassiana",
+    "password": "minhasenha"
+}
