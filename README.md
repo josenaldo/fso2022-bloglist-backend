@@ -1,43 +1,33 @@
-# Welcome to Fulstack Open 2022 - Blog List Backend👋
+# Welcome to Fulstack Open 2022 - Blog List Backend
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](/LICENSE)
-[![Twitter: josenaldomatos](https://img.shields.io/twitter/follow/josenaldomatos.svg?style=social)](https://twitter.com/josenaldomatos)
+- [Welcome to Fulstack Open 2022 - Blog List Backend](#welcome-to-fulstack-open-2022---blog-list-backend)
+  - [Fullstack Open 2022 course](#fullstack-open-2022-course)
+  - [Demo](#demo)
+  - [Frontend](#frontend)
+  - [Prerequisites](#prerequisites)
+  - [Installation and Setup](#installation-and-setup)
+  - [Deployment](#deployment)
+  - [Technologies](#technologies)
+    - [Dependencies](#dependencies)
+    - [Development Dependencies](#development-dependencies)
+    - [Deployment platforms](#deployment-platforms)
+  - [Author](#author)
+  - [License](#license)
+  - [Show your support](#show-your-support)
 
-> This is the backend component of the Blog List application. The main focus of
-> this project is on building an application with ReactJS that uses REST APIs
-> built with Node.js.
+> This is the backend component of the Blog List application. The main focus of this project is on building an application with ReactJS that uses REST APIs built with Node.js.
 >
-> The app allows users to create and manage a list of blogs, with features
-> such as adding, editing, and deleting blogs. This project serves as a
-> great example of how to build a modern and responsive web application using
-> ReactJS and other cutting-edge web development technologies.
+> The app allows users to create and manage a list of blogs, with features such as adding, editing, and deleting blogs. This project serves as a great example of how to build a modern and responsive web application using ReactJS and other cutting-edge web development technologies.
 
 ## [Fullstack Open 2022 course](https://fullstackopen.com/en/)
 
-This project is part of the Fullstack Open 2022 course, a comprehensive course
-that introduces learners to modern web application development using
-JavaScript. The course covers a wide range of topics including building
-single-page applications using ReactJS, REST APIs built with Node.js, and
-GraphQL. Participants will learn about testing, configuration, environment
-management, and the use of databases for storing application data. The course
-is free of charge and offers a certificate upon completion, as well as the
-opportunity to earn 5-14 ECTS credits from the University of Helsinki.
+This project is part of the Fullstack Open 2022 course, a comprehensive course that introduces learners to modern web application development using JavaScript. The course covers a wide range of topics including building single-page applications using ReactJS, REST APIs built with Node.js, and GraphQL. Participants will learn about testing, configuration, environment management, and the use of databases for storing application data. The course is free of charge and offers a certificate upon completion, as well as the opportunity to earn 5-14 ECTS credits from the University of Helsinki.
 
-The course is designed for individuals with good programming skills and basic
-knowledge of web programming and databases, as well as familiarity with Git
-version control. Participants are expected to have perseverance, independent
-problem-solving skills, and the ability to seek out information when necessary.
+The course is designed for individuals with good programming skills and basic knowledge of web programming and databases, as well as familiarity with Git version control. Participants are expected to have perseverance, independent problem-solving skills, and the ability to seek out information when necessary.
 
-The course has partnerships and affiliations with companies such as Houston
-Inc, Terveystalo, Elisa, Unity Technologies, and Konecranes. Guest lectures by
-experts from these companies are included in the course material. Participants
-can join the conversation and discuss course-related topics in the dedicated
-Discord and Telegram groups. Overall, Full Stack Open 2022 provides a
-comprehensive and practical introduction to modern web application development
-using the latest tools and technologies.
+The course has partnerships and affiliations with companies such as Houston Inc, Terveystalo, Elisa, Unity Technologies, and Konecranes. Guest lectures by experts from these companies are included in the course material. Participants can join the conversation and discuss course-related topics in the dedicated Discord and Telegram groups. Overall, Full Stack Open 2022 provides a comprehensive and practical introduction to modern web application development using the latest tools and technologies.
 
-## ✨ [Demo](https://fso2022-bloglist-backend.fly.dev)
+## [Demo](https://fso2022-bloglist-backend.fly.dev)
 
 You can access demo of the application at the following URL:
 
@@ -73,8 +63,7 @@ Before you begin, ensure you have met the following requirements:
 
 ## Installation and Setup
 
-Install all dependencies of the project. Must be run once before other scripts,
-right after the clone or download.
+Install all dependencies of the project. Must be run once before other scripts, right after the clone or download.
 
 ```sh
 yarn install
@@ -147,7 +136,7 @@ To deploy the application to Fly.io, follow these steps:
 
 This project uses the following technologies:
 
-#### Dependencies
+### Dependencies
 
 - [Bcrypt](https://github.com/kelektiv/node.bcrypt.js)
   - A library to help you hash passwords.
@@ -203,7 +192,7 @@ This project uses the following technologies:
     restarting the node application when changes are detected in the files of
     the project.
 
-#### Deployment platforms
+### Deployment platforms
 
 - [MongoDB Cloud](https://cloud.mongodb.com/)
   - A cloud-based MongoDB service that provides automated backups, monitoring,
@@ -219,6 +208,10 @@ This project uses the following technologies:
 - Twitter: [@josenaldomatos](https://twitter.com/josenaldomatos)
 - Github: [@josenaldo](https://github.com/josenaldo)
 - LinkedIn: [@josenaldo](https://linkedin.com/in/josenaldo)
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Show your support
 
