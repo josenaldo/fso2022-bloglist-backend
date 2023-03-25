@@ -1,17 +1,17 @@
-# Welcome to Fulstack Open 2022 - Blog List 👋
+# Welcome to Fulstack Open 2022 - Blog List Backend👋
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](/LICENSE)
 [![Twitter: josenaldomatos](https://img.shields.io/twitter/follow/josenaldomatos.svg?style=social)](https://twitter.com/josenaldomatos)
 
-> This is the frontend component of the Blog List application. The main focus of
+> This is the backend component of the Blog List application. The main focus of
 > this project is on building an application with ReactJS that uses REST APIs
 > built with Node.js.
 >
-> The app allows users to create and manage a list of blogs, with features such as
-> adding, editing, and deleting blogs. This project serves as a great example of
-> how to build a modern and responsive web application using ReactJS and other
-> cutting-edge web development technologies.
+> The app allows users to create and manage a list of blogs, with features
+> such as adding, editing, and deleting blogs. This project serves as a
+> great example of how to build a modern and responsive web application using
+> ReactJS and other cutting-edge web development technologies.
 
 ## [Fullstack Open 2022 course](https://fullstackopen.com/en/)
 
@@ -44,15 +44,16 @@ using the latest tools and technologies.
 Before you begin, ensure you have met the following requirements:
 
 - You have installed the latest version of Node.js
+- You have installed the latest version of Yarn
 - You have a MongoDB database (or a Mongo Atlas account)
 - You have a Fly.io account (for deployment)
 
 ## Installation and Setup
 
-To install the dependencies, run:
+Install all dependencies of the project. Must be run once before other scripts,
+right after the clone or download.
 
 ```sh
-## Install
 yarn install
 ```
 
@@ -123,6 +124,39 @@ To deploy the application to Fly.io, follow these steps:
 
 This project uses the following technologies:
 
+#### Dependencies
+
+- [Bcrypt](https://github.com/kelektiv/node.bcrypt.js)
+  - A library to help you hash passwords.
+- [CORS](https://github.com/expressjs/cors)
+  - A node.js package for providing a Connect/Express middleware that can
+    be used to enable CORS with various options.
+- [cross-env](https://github.com/kentcdodds/cross-env)
+  - A cross-platform way of setting environment variables.
+- [dotenv](https://github.com/motdotla/dotenv)
+  - A zero-dependency module that loads environment variables from a .env
+    file into process.env.
+- [Express.js](https://expressjs.com/)
+  - A minimalist web framework for Node.js that provides a robust set of
+    features for web and mobile applications.
+- [Express Async Errors](https://github.com/davidbanham/express-async-errors)
+  - A middleware that wraps async functions and forwards exceptions to
+    your express error handlers.
+- [JSON Web Token](https://jwt.io/)
+  - A compact URL-safe means of representing claims to be transferred
+    between two parties.
+- [Lodash](https://lodash.com/)
+  - A JavaScript utility library that provides helper functions for dealing
+    with objects, arrays, and strings.
+- [Mongoose](https://mongoosejs.com/)
+  - A MongoDB object modeling tool designed to work in an asynchronous
+    environment.
+- [Mongoose Unique Validator](https://github.com/mongoose-unique-validator/mongoose-unique-validator)
+  - A plugin that adds pre-save validation for unique fields within a
+    Mongoose schema.-
+- [Morgan](https://github.com/expressjs/morgan)
+  - An HTTP request logger middleware for Node.js.
+
 ### Development Dependencies
 
 - [ESLint](https://eslint.org/)
@@ -145,26 +179,6 @@ This project uses the following technologies:
   - A tool that helps develop node.js based applications by automatically
     restarting the node application when changes are detected in the files of
     the project.
-
-#### Dependencies
-
-- [CORS](https://github.com/expressjs/cors)
-  - A node.js package for providing a Connect/Express middleware that can
-    be used to enable CORS with various options.
-- [dotenv](https://github.com/motdotla/dotenv)
-  - A zero-dependency module that loads environment variables from a .env
-    file into process.env.
-- [Express.js](https://expressjs.com/)
-  - A minimalist web framework for Node.js that provides a robust set of
-    features for web and mobile applications.
-- [Lodash](https://lodash.com/)
-  - A JavaScript utility library that provides helper functions for dealing
-    with objects, arrays, and strings.
-- [Mongoose](https://mongoosejs.com/)
-  - A MongoDB object modeling tool designed to work in an asynchronous
-    environment.
-- [Morgan](https://github.com/expressjs/morgan)
-  - An HTTP request logger middleware for Node.js.
 
 #### Deployment platforms
 
