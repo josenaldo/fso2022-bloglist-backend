@@ -7,7 +7,6 @@
   "author": "Josenaldo de Oliveira Matos Filho",
   "license": "MIT",
   "devDependencies": {
-    "cross-env": "^7.0.3",
     "eslint": "^7.32.0 || ^8.2.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.5.0",
@@ -18,6 +17,7 @@
   "dependencies": {
     "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-async-errors": "^3.1.1",
@@ -34,9 +34,12 @@
     "test": "cross-env NODE_ENV=test jest --verbose --runInBand --forceExit --all",
     "clean": "npx rimraf build",
     "lint": "eslint .",
-    "deploy": "flyctl deploy",
     "open": "flyctl open",
-    "logs:prod": "flyctl logs"
+    "logs:prod": "flyctl logs",
+    "copy:ui": "cd ../fso2022-bloglist-frontend/ && npx cpy-cli build ../fso2022-bloglist-backend",
+    "build:ui": "yarn clean && cd ../fso2022-bloglist-frontend/ && yarn build && cd ../fso2022-bloglist-backend/ && yarn copy:ui",
+    "deploy": "flyctl deploy",
+    "deploy:full": "yarn build:ui && yarn deploy"
   },
   "jest": {
     "testEnvironment": "node"
