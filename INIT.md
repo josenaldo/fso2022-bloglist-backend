@@ -1,4 +1,4 @@
-# Full Stack JavaScript Project Starter Guide
+# Full Stack JavaScript Project Starter Guide - Backend
 
 This guide provides a step-by-step process for setting up a full stack
 JavaScript project using React, Express, MongoDB, and testing tools. By
