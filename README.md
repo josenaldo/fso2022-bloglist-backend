@@ -39,6 +39,29 @@ using the latest tools and technologies.
 
 ## ✨ [Demo](https://fso2022-bloglist-backend.fly.dev)
 
+You can access demo of the application at the following URL:
+
+- [https://fso2022-bloglist-backend.fly.dev](https://fso2022-bloglist-backend.fly.dev)
+
+With the demo, you can test the following features:
+
+- Login with an existing user
+- Create a new blog
+- View a list of blogs
+- Delete a blog
+- Like a blog
+
+To access the demo, you can use the following credentials:
+
+- User: demo
+- Password: demopassword
+
+## Frontend
+
+The frontend component of the application is available at the following URL:
+
+- [https://github.com/josenaldo/fso2022-bloglist-frontend](https://github.com/josenaldo/fso2022-bloglist-frontend)
+
 ## Prerequisites
 
 Before you begin, ensure you have met the following requirements:
@@ -192,7 +215,7 @@ This project uses the following technologies:
 
 👤 **Josenaldo de Oliveira Matos Filho**
 
-- Website: <josenaldo.github.io>
+- Website: [https://josenaldo.github.io](https://josenaldo.github.io)
 - Twitter: [@josenaldomatos](https://twitter.com/josenaldomatos)
 - Github: [@josenaldo](https://github.com/josenaldo)
 - LinkedIn: [@josenaldo](https://linkedin.com/in/josenaldo)
@@ -203,5 +226,4 @@ Give a ⭐️ if this project helped you!
 
 ---
 
-_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
-_This README was improved by ChatGPT_
+_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator) and improved by [ChatGPT](https://chat.openai.com/)_
