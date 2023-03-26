@@ -87,7 +87,7 @@ as code linting, formatting, and live reloading during development.
 Run the following command to install the necessary development libraries:
 
 ```sh
-yarn add --dev eslint eslint-config-prettier eslint-config-prettier nodemon
+yarn add  eslint eslint-config-prettier eslint-config-prettier nodemon --dev
 ```
 
 Here's a brief explanation of each library:
@@ -528,7 +528,7 @@ In this section, we'll cover how to set up testing using the Jest library.
 To get started, you'll need to install the Jest library:
 
 ```sh
-yarn add --dev jest
+yarn add jest --dev
 ```
 
 ### Configuring Jest
@@ -601,7 +601,7 @@ library to make sure that the environment variables are set correctly.
 To install `cross-env`, run the following command:
 
 ```sh
-yarn add --dev cross-env
+yarn add cross-env
 ```
 
 Then, update the `start`, `dev`, and `test` scripts in your `package.json` file

@@ -69,6 +69,18 @@ Install all dependencies of the project. Must be run once before other scripts, 
 yarn install
 ```
 
+To run the server in production mode, run:
+
+```sh
+yarn start
+```
+
+To run the server in test mode, run:
+
+```sh
+yarn start:test
+```
+
 To run the server in development mode, run:
 
 ```sh
@@ -79,12 +91,6 @@ To run the tests, run:
 
 ```sh
 yarn test
-```
-
-To run the server in production mode, run:
-
-```sh
-yarn start
 ```
 
 To clean the project directory, run:
@@ -114,6 +120,14 @@ To deploy the application to Fly.io, follow these steps:
    fly secrets set SECRET=<secret-key>
    ```
 
+2. Clone the frontend component of the application, in the same directory as the backend component:
+
+   ```sh
+   > cd ..
+
+   > git clone https://github.com/josenaldo/fso2022-bloglist-frontend.git
+   ```
+
 2. Run the following command to deploy the application:
 
    ```sh
@@ -123,13 +137,13 @@ To deploy the application to Fly.io, follow these steps:
 3. To view the deployed application, run:
 
    ```sh
-   yarn open
+   yarn prod:open
    ```
 
 4. To view the production logs of the application, run:
 
    ```sh
-   yarn logs:prod
+   yarn prod:logs
    ```
 
 ## Technologies

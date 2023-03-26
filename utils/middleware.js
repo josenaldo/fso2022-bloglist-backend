@@ -2,8 +2,6 @@ const jwt = require('jsonwebtoken')
 const morgan = require('morgan')
 const logger = require('./logger')
 
-const User = require('../models/user')
-
 morgan.token('body', (request) => JSON.stringify(request.body))
 
 const morganTemplate = `---
