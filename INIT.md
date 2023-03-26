@@ -664,7 +664,7 @@ this test to match the routes and responses of your own application.
 By using `supertest`, you can automate your testing process and ensure that your
 application is working as expected.
 
-### Refactoring
+### Refactoring for Testing
 
 After installing `supertest`, the following changes must be made:
 
@@ -693,6 +693,68 @@ After installing `supertest`, the following changes must be made:
   ```env
   MONGODB_URI=mongodb+srv://<user>:<password>@<cluster>.mongodb.net/<database>-test?retryWrites=true&w=majority
   ```
+
+### Preparing the app for tests with Cypress
+
+To prepare the backend for testing with Cypress, there are a few steps that need to be taken:
+
+1. Add a start:test script to package.json:
+
+```json
+"start:test": "cross-env NODE_ENV=test LOGS=true node index.js"
+```
+
+This script sets the `NODE_ENV` environment variable to "test" and enables logging by setting the `LOGS` variable to `true`. Setting the environment variable to "test" is important because it allows the server to use a different database during testing than it does during development. Enabling logging is also useful during testing because it allows us to see the requests and responses that are being made.
+
+2. Create a testing controller:
+
+Create a new file controllers/testing.js in the backend directory that exports an object with methods for creating and deleting test data
+
+```js
+const testingRouter = require('express').Router()
+const Blog = require('../models/blog')
+const User = require('../models/user')
+
+testingRouter.post('/reset', async (request, response) => {
+  await Blog.deleteMany({})
+  await User.deleteMany({})
+  response.status(204).end()
+})
+
+module.exports = testingRouter
+
+```
+
+This controller is used to reset the test database before each test. By calling the `reset` method before each test, we can ensure that the database is in a known state before running the test.
+
+3. Add testing middleware to app.js:
+
+```js
+if (process.env.NODE_ENV === 'test') {
+  const testingRouter = require('./controllers/testing')
+  app.use('/api/testing', testingRouter)
+}
+```
+
+This middleware checks the value of the `NODE_ENV` environment variable and only adds the testing routes if the variable is set to "test". This ensures that the testing routes are not added when the server is running in production or development mode.
+
+4. Refactor logger middleware:
+
+```js
+const info = (...params) => {
+  if (process.env.NODE_ENV !== 'test' || process.env.LOGS === 'true') {
+    // ...
+  }
+}
+
+const error = (...params) => {
+  if (process.env.NODE_ENV !== 'test' || process.env.LOGS === 'true') {
+    // ...
+  }
+}
+```
+
+By following these steps, we can prepare the backend for testing with Cypress and ensure that our tests run smoothly. We can control when logging occurs using the `info` and `error` functions, which can be useful during testing when we only want to see the logs for specific requests. These functions check if `NODE_ENV` is not `test` or if `LOGS` is `true` before logging the message, allowing us to disable logging during tests or enable it only when necessary.
 
 ## Authentication
 
