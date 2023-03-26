@@ -6,6 +6,48 @@ following the instructions in this guide, you will be able to create a
 well-structured project with a consistent development environment and best
 practices in place.
 
+## Table of Contents
+
+- [Full Stack JavaScript Project Starter Guide - Backend](#full-stack-javascript-project-starter-guide---backend)
+  - [Table of Contents](#table-of-contents)
+  - [Project Setup](#project-setup)
+    - [Create project dir](#create-project-dir)
+    - [Configure yarn](#configure-yarn)
+    - [Add Development Libraries](#add-development-libraries)
+    - [Add Main Libraries](#add-main-libraries)
+    - [Add NPM Scripts](#add-npm-scripts)
+    - [Generate readme](#generate-readme)
+    - [Generate license](#generate-license)
+    - [Generate `.gitignore`](#generate-gitignore)
+    - [Generate `.editorconfig`](#generate-editorconfig)
+    - [Configure ESlint](#configure-eslint)
+    - [Configure prettier](#configure-prettier)
+    - [Configure Fly.io](#configure-flyio)
+  - [Project structure](#project-structure)
+  - [Create a MongoDB database](#create-a-mongodb-database)
+  - [Create a MongoDB database for your project](#create-a-mongodb-database-for-your-project)
+  - [Deploying to Fly.io](#deploying-to-flyio)
+  - [Tests](#tests)
+    - [Installing Jest](#installing-jest)
+    - [Configuring Jest](#configuring-jest)
+    - [Configuring the Testing Environment](#configuring-the-testing-environment)
+    - [Configure Cross-Environment Scripts](#configure-cross-environment-scripts)
+    - [Running Tests](#running-tests)
+    - [Supertest](#supertest)
+    - [Refactoring for Testing](#refactoring-for-testing)
+      - [/utils/config.js](#utilsconfigjs)
+      - [`.env`](#env)
+    - [Preparing the app for tests with Cypress](#preparing-the-app-for-tests-with-cypress)
+  - [Authentication](#authentication)
+    - [Create User](#create-user)
+      - [Install Required Libraries](#install-required-libraries)
+      - [Write Tests for User Creation](#write-tests-for-user-creation)
+      - [Define User Model](#define-user-model)
+      - [Create Route and Controller for User Creation](#create-route-and-controller-for-user-creation)
+    - [Login](#login)
+      - [Write Tests for Login](#write-tests-for-login)
+      - [Create Route and Controller for Login](#create-route-and-controller-for-login)
+
 ## Project Setup
 
 This section guides you through the initial configuration process required for
